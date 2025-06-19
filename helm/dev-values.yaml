@@ -1,3 +1,4 @@
 name: "dev-demoapp"
 image_tag: 0.2
 port: 30005
+namespace: "shradha"
