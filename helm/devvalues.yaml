@@ -1,0 +1,4 @@
+name: "dev-demoapp"
+image_tag: 0.6
+port: 30005
+env: <+pipeline.variables.env>
