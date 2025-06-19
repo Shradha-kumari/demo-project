@@ -15,4 +15,10 @@ spec:
                 name: dev-demoapp
                 port:
                   number: 5000
-          
+          - path: /adm
+            pathType: Prefix
+            backend:
+              service:
+                name: dev-demoapp
+                port:
+                  number: 5000
