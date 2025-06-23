@@ -3,4 +3,4 @@ services:
   web:
     image: "shradha11/demo:latest"
     ports:
-      - "5000:5001"
+      - "5000:5000"
