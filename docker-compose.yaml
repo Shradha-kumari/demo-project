@@ -1,0 +1,6 @@
+version: "3.3"
+services: 
+  web:
+    image: "shradha11/demo:latest"
+    ports:
+      - "5000:5000"
