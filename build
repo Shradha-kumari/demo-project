@@ -36,9 +36,14 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                echo 'this will deploy the code'
-                sh "docker compose up -d"
+               script {
+                build job: 'k8s-deployment', parameters: [
+                    string(name: 'image_tag', value: env.BUILD_NUMBER)
+                    
+                ]
+
             }
+}
         }
     }    
     
