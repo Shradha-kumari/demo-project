@@ -1,0 +1,47 @@
+pipeline {
+    agent { label "vinod" }
+
+    stages {
+        stage('copy') {
+            steps {
+                echo 'this will clone github'
+                git url: "https://github.com/Shradha-kumari/demo-project.git", branch: "main"
+                echo 'code clone done'
+            }
+        }
+        stage('build') {
+            steps {
+                echo 'this will build image'
+                sh "whoami"
+                sh "docker build -t demo:${env.BUILD_NUMBER} ."
+            }
+        }
+        stage('push') {
+            steps {
+                echo 'this will push image to dockerhub'
+                   withCredentials([usernamePassword(
+                    credentialsId:"dockerhubcred",
+                    passwordVariable: "dockerHubPass",
+                    usernameVariable: "dockerHubUser"
+                )]){
+                
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                sh "docker image tag demo:${env.BUILD_NUMBER} ${env.dockerHubUser}/demo:${env.BUILD_NUMBER}"
+                sh "docker push ${env.dockerHubUser}/demo:${env.BUILD_NUMBER}"
+            
+                }  
+                
+            }
+                
+        }
+        stage('deploy') {
+            steps {
+                echo 'this will deploy the code'
+                sh "docker compose up -d"
+            }
+        }
+    }    
+    
+}
+
+
